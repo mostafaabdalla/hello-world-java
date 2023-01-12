@@ -17,6 +17,8 @@ resource "aws_instance" "default" {
     sudo yum install jenkins -y
     sudo systemctl enable jenkins
     sudo systemctl start jenkins
+    # install git
+    sudo yum install git -y
     EOF
 
   tags = {
