@@ -23,13 +23,15 @@ resource "aws_instance" "jenkins" {
     ###########################
     # install maven
     cd /opt/
-    sudo wget https://dlcdn.apache.org/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bin.tar.gz
-    sudo tar -xvzf /opt/apache-maven-3.8.7-bin.tar.gz
-    sudo mv apache-maven-3.8.7 maven ; sudo rm -rf apache-maven-3.8.7-bin.tar.gz
-
-    sudo echo "M2_HOME=/opt/maven M2=/opt/maven/bin JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.16.0.8-1.amzn2.0.1.x86_64" >> ~/.bash_profile
-    sudo echo "PATH=$PATH:$M2:$M2_HOME:$JAVA_HOME" >> ~/.bash_profile
-    sudo echo "export PATH" >> ~/.bash_profile
+    wget https://dlcdn.apache.org/maven/maven-3/3.8.7/binaries/apache-maven-3.8.7-bin.tar.gz
+    tar -xvzf /opt/apache-maven-3.8.7-bin.tar.gz
+    mv apache-maven-3.8.7 maven ; rm -rf apache-maven-3.8.7-bin.tar.gz
+    sed -i '$ d' ~/.bash_profile
+    echo "M2_HOME=/opt/maven
+M2=/opt/maven/bin
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.16.0.8-1.amzn2.0.1.x86_64" >> ~/.bash_profile
+    echo "PATH=$PATH:$HOME/bin:/opt/maven:/opt/maven/bin:/usr/lib/jvm/java-11-openjdk-11.0.16.0.8-1.amzn2.0.1.x86_64" >> ~/.bash_profile
+    echo "export PATH" >> ~/.bash_profile
 
     sudo source ~/.bash_profile
     
@@ -71,7 +73,6 @@ resource "aws_security_group" "jenkins-sg" {
     Name = "allow_tls"
   }
 }
-
 resource "aws_instance" "tomcat" {
   ami           = "ami-0b5eea76982371e91"
   instance_type = "t2.micro"
@@ -136,6 +137,7 @@ resource "aws_security_group" "tomcat-sg" {
 output "jenkins_public_dns_name" {
      value = aws_instance.jenkins.public_dns
 }
+
 output "tomcat_public_dns_name" {
      value = aws_instance.tomcat.public_dns
 }
