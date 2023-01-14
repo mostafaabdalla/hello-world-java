@@ -1,10 +1,10 @@
-resource "aws_instance" "default" {
+resource "aws_instance" "jenkins" {
   ami           = "ami-0b5eea76982371e91"
   instance_type = "t2.micro"
 
   key_name = "devops_project"
 
-  security_groups = [aws_security_group.default.name]
+  security_groups = [aws_security_group.jenkins-sg.name]
 
   user_data = <<EOF
     #!/bin/bash
@@ -40,7 +40,7 @@ resource "aws_instance" "default" {
   }
 }
 
-resource "aws_security_group" "default" {
+resource "aws_security_group" "jenkins-sg" {
   name        = "Jenkins_sg"
   description = "Jenkins_sg"
   vpc_id      = "vpc-0c0c7be4f059ab962"
@@ -78,12 +78,23 @@ resource "aws_instance" "tomcat" {
 
   key_name = "devops_project"
 
-  security_groups = [aws_security_group.default.name]
+  security_groups = [aws_security_group.tomcat-sg.name]
 
   user_data = <<EOF
     #!/bin/bash
-    sudo yum update -y
-    ###########################  
+    yum update -y
+    yum upgrade
+    amazon-linux-extras install java-openjdk11 -y
+    cd /opt
+    wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz
+    tar -xvzf /opt/apache-tomcat-10.0.27.tar.gz
+    mv apache-tomcat-10.0.27 tomcat ; rm -rf apache-tomcat-10.0.27.tar.gz
+    chmod +x /opt/tomcat/bin/startup.sh 
+    chmod +x /opt/tomcat/bin/shutdown.sh
+    ln -s /opt/tomcat/bin/startup.sh /usr/local/bin/tomcatup
+    ln -s /opt/tomcat/bin/shutdown.sh /usr/local/bin/tomcatdown
+    tomcatup
+
     EOF
 
   tags = {
@@ -123,7 +134,7 @@ resource "aws_security_group" "tomcat-sg" {
   }
 }
 output "jenkins_public_dns_name" {
-     value = aws_instance.default.public_dns
+     value = aws_instance.jenkins.public_dns
 }
 output "tomcat_public_dns_name" {
      value = aws_instance.tomcat.public_dns
