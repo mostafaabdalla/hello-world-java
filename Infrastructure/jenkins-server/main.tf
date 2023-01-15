@@ -75,5 +75,5 @@ resource "aws_security_group" "jenkins-sg" {
 }
 
 output "jenkins_public_dns_name" {
-     value = aws_instance.jenkins.public_dns
+  value = aws_instance.jenkins.public_dns
 }

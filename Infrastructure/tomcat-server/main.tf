@@ -61,5 +61,5 @@ resource "aws_security_group" "tomcat-sg" {
 }
 
 output "tomcat_public_dns_name" {
-     value = aws_instance.tomcat.public_dns
+  value = aws_instance.tomcat.public_dns
 }
