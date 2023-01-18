@@ -22,5 +22,5 @@ module "ansible-server" {
 }
 
 output "instance_public_dns_name" {
-  value = module.docker-host.instance_public_dns_name
+  value = module.ansible-server.instance_public_dns_name
 }
