@@ -17,8 +17,9 @@ module "docker-host" {
   yum install docker -y
   service docker start
   useradd dockeradmin
-  passwd dockeradmin
+  useradd ansadmin
   usermod -aG docker dockeradmin
+  usermod -aG docker ansadmin
   mkdir /opt/docker
   chown dockeradmin:dockeradmin /opt/docker
   EOF
