@@ -19,6 +19,8 @@ module "docker-host" {
   useradd dockeradmin
   passwd dockeradmin
   usermod -aG docker dockeradmin
+  mkdir /opt/docker
+  chown dockeradmin:dockeradmin /opt/docker
   EOF
 }
 
