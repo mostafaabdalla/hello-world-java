@@ -16,8 +16,11 @@ module "ansible-server" {
   hostnamectl set-hostname ansible-server
   yum update -y
   amazon-linux-extras install ansible2
+  yum install -y docker
   useradd ansadmin
   usermod -aG wheel ansadmin
+  usermod -aG docker ansadmin
+  systemctl start docker && systemctl enable docker
   mkdir /opt/docker
   chown ansadmin:ansadmin /opt/docker
   EOF
