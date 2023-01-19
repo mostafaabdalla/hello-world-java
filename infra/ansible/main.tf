@@ -18,6 +18,8 @@ module "ansible-server" {
   amazon-linux-extras install ansible2
   useradd ansadmin
   usermod -aG wheel ansadmin
+  mkdir /opt/docker
+  chown ansadmin:ansadmin /opt/docker
   EOF
 }
 
