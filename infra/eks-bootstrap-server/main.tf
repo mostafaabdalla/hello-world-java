@@ -49,9 +49,7 @@ resource "aws_iam_role" "eksctl-role" {
 
 resource "aws_iam_role_policy_attachment" "eksctl-attach" {
   for_each = toset([
-    "arn:aws:iam::aws:policy/AmazonEC2FullAccess", 
-    "arn:aws:iam::aws:policy/AWSCloudFormationFullAccess",
-    "arn:aws:iam::aws:policy/IAMFullAccess"
+    "arn:aws:iam::aws:policy/AdministratorAccess"
   ])
   role       = aws_iam_role.eksctl-role.name
   policy_arn = each.value
