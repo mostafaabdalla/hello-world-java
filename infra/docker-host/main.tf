@@ -19,7 +19,6 @@ module "docker-host" {
   useradd dockeradmin
   useradd ansadmin
   usermod -aG docker dockeradmin
-  usermod -aG docker ansadmin
   mkdir /opt/docker
   chown dockeradmin:dockeradmin /opt/docker
   EOF
