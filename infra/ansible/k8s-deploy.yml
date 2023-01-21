@@ -6,3 +6,5 @@
     command: kubectl apply -f deployment.yml
   - name: deploy service
     command: kubectl apply -f service.yml
+  - name: update k8s deployment if image changed
+    command: kubectl rollout restart deployment/regapp-deployment
