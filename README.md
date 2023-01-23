@@ -20,5 +20,5 @@ Third task:
 
 ## So the final flow should be like this:
 
-![App Screenshot](simple_CI_CD)
+![App Screenshot](simple_CI_CD.jpeg)
 
