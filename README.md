@@ -17,3 +17,8 @@ Third task:
 
     Deploy to AWS EKS cluster.
 
+
+## So the final flow should be like this:
+
+![App Screenshot](simple_CI_CD)
+
