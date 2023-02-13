@@ -1,5 +1,5 @@
 
-# Jenkins CI/CD pipeline for a smiple java application
+# Jenkins CI/CD pipeline for a simple java application
 
 Simple CI/CD pipeline to deploy the app on AWS K8s cluster.
 
